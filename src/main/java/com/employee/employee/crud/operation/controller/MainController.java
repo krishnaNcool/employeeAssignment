@@ -2,6 +2,7 @@ package com.employee.employee.crud.operation.controller;
 
 import com.employee.employee.crud.operation.entity.Employee;
 import com.employee.employee.crud.operation.repository.EmployeeRepository;
+import com.employee.employee.crud.operation.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/")
 public class MainController {
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -53,6 +57,12 @@ public class MainController {
     @GetMapping("/employees/{id}")
     public Optional<Employee> getEmployeeById(@PathVariable int id){
         return employeeRepository.findById(id);
+    }
+
+    @GetMapping("/employee/sortby/{field}")
+    public List<Employee> sortByField(@PathVariable String field){
+        List<Employee> employees= employeeService.sortByField(field);
+        return employees;
     }
 
 
